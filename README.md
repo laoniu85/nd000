@@ -1,19 +1,6 @@
 # nd000
 # stage0 done --> stage1.html
 # stage1 done --> stage1.py
-# 
+# stage2 done --> stage2.py
+# stage3 done --> stage_movie_website (dir)
 
-
-# h1
-## h2
-### h3
-#### h4
-#####  h5
-```java 
-class Test{
-    String test(){
-        int i = 5;
-    }
-}
-
-```
