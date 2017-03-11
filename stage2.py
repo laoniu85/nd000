@@ -70,14 +70,13 @@ def random_choose_quiz():
             return quiz
     
 def choose_level():
-    """to choose level
-    """
     level = raw_input("please select the level(1/2/3)\n")
     while True:
         print level_choose_message
         if level == '1':
             show_answer=True
             achieve=achieve_easy
+            minus=minus_easy
             break
         if level == '2':
             achieve = achieve_middle
@@ -91,27 +90,32 @@ def choose_level():
             break
         print level_choose_error_message
 
+def print_status(point,combo_count,quiz_count):
+    print quiz_point_info.replace(point_replacer,str(point))\
+    .replace(combo_replacer,str(combo_count))\
+    .replace(quiz_count_repalcer,str(quiz_count))
+
+
+def print_result(point,achieve):
+    if(point>=achieve):
+        print win_message
+    else:
+        print loose_message 
+
+def check_quiz(quiz):
+    answer = raw_input(quiz_message.replace(quiz_word_replacer,quiz[0]))
+    return is_right_answer(answer,quiz)
 def play_quiz():
     print welcom_message
-    plus =  1
-    combo_plus = 2
-    minus = -1
     point = point_start 
     passed_quiz=[]
     quiz_count = 0
-#choose level
-    choose_level()
     combo_count=1
-# main loop of quiz
+    choose_level()
     while(point >= 0 and point < achieve):
         quiz = random_choose_quiz()
-        #print quiz
-        answer = raw_input(quiz_message.replace(quiz_word_replacer,quiz[0]))
-        if(is_right_answer(answer,quiz)):
-            if(combo_count>1):
-                point+=combo_plus
-            else:
-                point+=plus
+        if(check_quiz(quiz)):
+            point+=combo_plus if (combo_count>1) else plus
             combo_count+=1
             print quiz_right_message
         else:
@@ -121,15 +125,9 @@ def play_quiz():
         if show_answer:
             print show_answer_message.replace(right_answer_replacer,quiz[1])
         quiz_count+=1
-        print quiz_point_info.replace(point_replacer,str(point))\
-        .replace(combo_replacer,str(combo_count))\
-        .replace(quiz_count_repalcer,str(quiz_count))
-    
-# print game result 
-    if(point>=achieve):
-        print win_message
-    else:
-        print loose_message
+        print_status(point,combo_count,quiz_count)
+    print_result(point,achieve)
+
             
         
 
